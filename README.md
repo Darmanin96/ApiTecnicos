@@ -2,9 +2,18 @@
 Api del proyecto Movil
 
 
-Con esta API podremos hacer el método GET para ver todos los técnicos:
-<img width="1364" height="838" alt="image" src="https://github.com/user-attachments/assets/e99e6e0d-88e2-4521-adbc-a45c88357246" />
+Con esta APi podremos ver todos los tecnicos introducidos en la tabla tecnicos
+<br>
+<img width="1423" height="884" alt="image" src="https://github.com/user-attachments/assets/c60a75e9-da67-48ad-8ce5-d8a855a56694" />
 
- Y el método Post para introducir en los gastos de los técnicos que tengan:
-<img width="1404" height="825" alt="image" src="https://github.com/user-attachments/assets/25e89516-3766-4283-87b5-2e05e114327a" />
- 
+<br>
+También podremos ver los gastos que han echo los técncios en la tabla gastos_tecnicos
+<img width="1407" height="920" alt="image" src="https://github.com/user-attachments/assets/22673bd1-1426-4788-b7b2-8a6262393472" />
+
+
+<br>
+
+
+
+
+
