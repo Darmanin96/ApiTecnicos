@@ -15,9 +15,7 @@ switch ($dividido[0]) {
     case 'tecnicos':
         if ($metodo === 'GET') {
             $controller->getAll();
-        } else if($metodo === 'POST') {
-            $controller->insertarTecnico(); 
-        }else {
+         }else {
             http_response_code(405);
             echo json_encode(["status" => "error", "message" => "Método no permitido para este endpoint."]);
         }
@@ -26,7 +24,9 @@ switch ($dividido[0]) {
     case 'gastos':
         if ($metodo === 'GET') {
             $controller->getGastos();
-        }else {
+        }else if($metodo === 'POST') {
+            $controller->insertarTecnico(); 
+         } else {
             http_response_code(405);
             echo json_encode(["status" => "error", "message" => "Método no permitido para este endpoint."]);
         }
