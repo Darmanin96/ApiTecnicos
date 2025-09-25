@@ -12,6 +12,7 @@ También podremos ver los gastos que han echo los técncios en la tabla gastos_t
 
 
 <br>
+Y por supuesto introoducir nuevos registros en la tabla gastos_tecnicos
 
 
 
