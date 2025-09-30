@@ -31,7 +31,9 @@ switch ($dividido[0]) {
             $controller->insertarTecnico();
         } elseif ($metodo === 'DELETE') {
             $controller->deleteGasto();
-        } else {
+        } else if($metodo === 'PUT'){
+            $controller->updateGasto();
+        }else {
             http_response_code(405);
             echo json_encode(["status" => "error", "message" => "Método no permitido para este endpoint."]);
         }

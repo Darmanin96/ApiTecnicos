@@ -48,6 +48,57 @@ class DatosController {
 }
 
 
+
+
+public function updateGasto() {
+    $id = $_GET['id'] ?? null;
+    if (!$id) {
+        renderJSON(["status" => "error", "message" => "ID es obligatorio para actualizar un gasto"]);
+        return;
+    }
+
+    $gastos = $this->modelo->obtenerGastos();
+    $existe = array_filter($gastos, fn($g) => $g['id'] == $id);
+    if (empty($existe)) {
+        renderJSON(["status" => "error", "message" => "No se encontró el gasto con el ID proporcionado"]);
+        return;
+    }
+
+    $input = json_decode(file_get_contents("php://input"), true);
+    if (!$input) {
+        renderJSON(["status" => "error", "message" => "No se recibieron datos válidos"]);
+        return;
+    }
+
+    $nombreTecnico   = $input['nombreTecnico']   ?? null;
+    $codigoEmpleado  = $input['codigoEmpleado']  ?? null;
+    $delegacion      = $input['delegacion']      ?? null;
+    $importe         = $input['importe']         ?? null;
+    $fecha           = $input['fecha']           ?? null;
+    $imagenAlimento  = $input['imagenAlimento']  ?? null;
+    $imagenTicket    = $input['imagenTicket']    ?? null;
+
+    if (!$nombreTecnico || !$codigoEmpleado || !$delegacion || !$importe || !$fecha) {
+        renderJSON(["status" => "error", "message" => "Faltan campos obligatorios para actualizar"]);
+        return;
+    }
+
+    $this->modelo->updateGasto(
+        $id,
+        $nombreTecnico,
+        $codigoEmpleado,
+        $delegacion,
+        $importe,
+        $fecha,
+        $imagenAlimento,
+        $imagenTicket
+    );
+
+    renderJSON(["status" => "success", "message" => "Gasto actualizado correctamente"]);
+}
+
+
+
     public function insertarTecnico() {
         $nombreTecnico = $_POST['nombreTecnico'] ?? null;
         $codigoEmpleado = $_POST['codigoEmpleado'] ?? null;
