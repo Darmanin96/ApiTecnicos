@@ -58,5 +58,7 @@ Descripción: Utilizado por el Proyecto-movil para insertar nuevos registros de 
 Esta API enlaza los dos componentes del sistema:
 
 Proyecto	Interacción con la API
+
 Proyecto-movil	Consume el GET /api/tecnicos para autenticar y usa el POST /api/gastos para el envío de nuevos registros.
+
 TecnicosTabla	Consume el GET /api/gastos para poblar la tabla y utiliza el DELETE /api/gastos/{id} para eliminar registros.
