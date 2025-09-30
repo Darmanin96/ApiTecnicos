@@ -12,7 +12,9 @@ También podremos ver los gastos que han echo los técncios en la tabla gastos_t
 
 
 <br>
-Y por supuesto introoducir nuevos registros en la tabla gastos_tecnicos
+Y por supuesto podremos eliminar registros de la tabla gastos_tecnicos
+<img width="1398" height="646" alt="image" src="https://github.com/user-attachments/assets/211d1303-5ac5-4432-8244-288ebfdd54f3" />
+
 
 
 
