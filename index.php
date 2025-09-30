@@ -2,20 +2,23 @@
 require_once __DIR__ . '/config/conectar.php';
 require_once __DIR__ . '/controllers/DatosControllers.php';
 
+header('Content-Type: application/json');
+
 $controller = new DatosController($dbConn);
+
 $metodo = $_SERVER['REQUEST_METHOD'];
 $url = $_SERVER['REQUEST_URI'];
 
-$path = str_replace('/Api-Tecnicos/', '', $url);
+$path = parse_url($url, PHP_URL_PATH);
+$path = str_replace('/Api-Tecnicos/', '', $path);
 $path = trim($path, '/');
-
 $dividido = explode('/', $path);
 
 switch ($dividido[0]) {
     case 'tecnicos':
         if ($metodo === 'GET') {
             $controller->getAll();
-         }else {
+        } else {
             http_response_code(405);
             echo json_encode(["status" => "error", "message" => "Método no permitido para este endpoint."]);
         }
@@ -24,9 +27,11 @@ switch ($dividido[0]) {
     case 'gastos':
         if ($metodo === 'GET') {
             $controller->getGastos();
-        }else if($metodo === 'POST') {
-            $controller->insertarTecnico(); 
-         } else {
+        } elseif ($metodo === 'POST') {
+            $controller->insertarTecnico();
+        } elseif ($metodo === 'DELETE') {
+            $controller->deleteGasto();
+        } else {
             http_response_code(405);
             echo json_encode(["status" => "error", "message" => "Método no permitido para este endpoint."]);
         }
@@ -37,4 +42,3 @@ switch ($dividido[0]) {
         echo json_encode(["status" => "error", "message" => "Ruta no encontrada."]);
         break;
 }
-?>

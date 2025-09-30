@@ -16,7 +16,7 @@ class DatosController {
 
     public function getGastos() {
         $data = $this->modelo->obtenerGastos();
-          foreach ($data as &$row) {
+        foreach ($data as &$row) {
             if (isset($row['imagenAlimento'])) {
                 $row['imagenAlimento'] = base64_encode($row['imagenAlimento']);
             }
@@ -26,6 +26,27 @@ class DatosController {
         }
         renderJSON(["status" => "success", "data" => $data]);
     }
+
+  public function deleteGasto() {
+    $id = $_GET['id'] ?? null;
+
+    if (!$id) {
+        renderJSON(["status" => "error", "message" => "ID es obligatorio para eliminar un gasto"]);
+        return;
+    }
+    $existe = $this->modelo->obtenerGastos(); 
+    $existe = array_filter($existe, fn($gasto) => $gasto['id'] == $id);
+
+    if (empty($existe)) {
+        renderJSON(["status" => "error", "message" => "No se encontró el gasto con el ID proporcionado"]);
+        return;
+    }
+
+    $this->modelo->deleteGasto($id);
+
+    renderJSON(["status" => "success", "message" => "Gasto eliminado correctamente"]);
+}
+
 
     public function insertarTecnico() {
         $nombreTecnico = $_POST['nombreTecnico'] ?? null;
@@ -43,8 +64,8 @@ class DatosController {
         }
 
         $contenidoAlimento = file_get_contents($imagenAlimento['tmp_name']);
-        $contenidoTicket = file_get_contents($imagenTicket['tmp_name']);
-        
+        $contenidoTicket   = file_get_contents($imagenTicket['tmp_name']);
+
         $idInsertado = $this->modelo->introducirTecnicos(
             $nombreTecnico,
             $codigoEmpleado,
@@ -62,4 +83,3 @@ class DatosController {
         ]);
     }
 }
-?>
