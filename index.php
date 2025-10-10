@@ -4,6 +4,36 @@ require_once __DIR__ . '/controllers/DatosControllers.php';
 
 header('Content-Type: application/json');
 
+
+$ip = $_SERVER['REMOTE_ADDR'];
+$limite = 100;
+$ventana = 60;
+$archivo = sys_get_temp_dir() . "/rate_limit_" . md5($ip);
+
+$ahora = time();
+$datos = ['contador' => 1, 'inicio' => $ahora];
+
+if (file_exists($archivo)) {
+    $contenido = json_decode(file_get_contents($archivo), true);
+    if ($contenido && ($ahora - $contenido['inicio'] <= $ventana)) {
+        $contenido['contador']++;
+        $datos = $contenido;
+    }
+}
+
+if ($datos['contador'] > $limite) {
+    http_response_code(429);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Demasiadas solicitudes. Intenta de nuevo en unos segundos.'
+    ]);
+    exit;
+}
+
+file_put_contents($archivo, json_encode($datos));
+
+
+
 $controller = new DatosController($dbConn);
 
 $metodo = $_SERVER['REQUEST_METHOD'];
